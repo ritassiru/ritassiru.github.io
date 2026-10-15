@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jogos de inglês · Prof. Ritaciro Cavalcante</title>
+<meta name="description" content="Jogos e leituras interativas em inglês para o Ensino Médio Integrado do IFAL Campus Viçosa. Funcionam no celular, sem internet.">
+<meta name="theme-color" content="#6D2E46">
+<link rel="icon" href="img/story-shelf.png">
+<style>
+@font-face { font-family: "Atkinson Hyperlegible"; font-weight: 400; font-style: normal; font-display: swap; src: url(fonts/atkinson-hyperlegible-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-weight: 400; font-style: italic; font-display: swap; src: url(fonts/atkinson-hyperlegible-latin-400-italic.woff2) format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-weight: 700; font-style: normal; font-display: swap; src: url(fonts/atkinson-hyperlegible-latin-700-normal.woff2) format("woff2"); }
+@font-face { font-family: "Fraunces"; font-weight: 600; font-style: normal; font-display: swap; src: url(fonts/fraunces-latin-600-normal.woff2) format("woff2"); }
+@font-face { font-family: "Fraunces"; font-weight: 800; font-style: normal; font-display: swap; src: url(fonts/fraunces-latin-800-normal.woff2) format("woff2"); }
+
+/* as mesmas cores dos jogos (claro e escuro) */
+:root {
+  --bg: #F6F0E6; --panel: #FFFDF8; --ink: #2B1721; --muted: #6E5C63; --berry: #6D2E46; --rose: #A26769;
+  --cream: #ECE2D0; --line: #D9CBBE; --ok: #3E8E6B; --gold: #C08A2E; --btn-text: #FFFFFF; --todo: #FCEFC7;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1E1318; --panel: #2A1C23; --ink: #F1E7EA; --muted: #BFA9B1; --berry: #C77A98; --rose: #D19A9C;
+    --cream: #3A2830; --line: #4A3540; --ok: #62B891; --gold: #E0AE55; --btn-text: #1E1318; --todo: #4A3A1E;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1E1318; --panel: #2A1C23; --ink: #F1E7EA; --muted: #BFA9B1; --berry: #C77A98; --rose: #D19A9C;
+  --cream: #3A2830; --line: #4A3540; --ok: #62B891; --gold: #E0AE55; --btn-text: #1E1318; --todo: #4A3A1E;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif; font-size: 1.0625rem; line-height: 1.6; }
+h1, h2, h3, .brand { font-family: "Fraunces", Georgia, "Times New Roman", serif; font-weight: 800; letter-spacing: -0.01em; line-height: 1.2; }
+a { color: var(--berry); }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+/* topo */
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; }
+.brand { font-size: 1.05rem; color: var(--berry); text-decoration: none; }
+.bar nav { display: flex; gap: 16px; font-size: .95rem; }
+.bar nav a { color: var(--muted); text-decoration: none; font-weight: 700; }
+.bar nav a { white-space: nowrap; }
+@media (max-width: 420px) { .bar { flex-wrap: wrap; } .bar nav { gap: 14px; } }
+.bar nav a:hover { color: var(--berry); }
+
+.hero { padding: 28px 0 8px; }
+.hero h1 { font-size: clamp(1.9rem, 6vw, 3rem); margin: 0 0 12px; max-width: 18ch; }
+.hero p { font-size: 1.12rem; color: var(--muted); max-width: 56ch; margin: 0 0 18px; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.pills li { background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: .9rem; }
+
+section { padding: 36px 0 8px; }
+section > h2 { font-size: 1.6rem; margin: 0 0 4px; }
+.lead { color: var(--muted); margin: 0 0 20px; max-width: 60ch; }
+
+/* cartões dos jogos */
+.grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.card-h { display: flex; gap: 14px; align-items: center; }
+.card-h img { width: 64px; height: 64px; border-radius: 16px; flex: none; }
+.card h3 { margin: 0; font-size: 1.3rem; }
+.card .pt { margin: 2px 0 0; color: var(--muted); font-size: .95rem; }
+.card p { margin: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; list-style: none; }
+.tags li { background: var(--cream); border-radius: 8px; padding: 2px 9px; font-size: .85rem; font-weight: 700; }
+.tags li.gram { background: transparent; border: 1px solid var(--line); font-weight: 400; }
+.sub { font-size: .95rem; color: var(--muted); }
+.sub ul { margin: 4px 0 0; padding-left: 20px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 4px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: 12px; font-weight: 700; text-decoration: none; min-height: 44px; }
+.btn.primary { background: var(--berry); color: var(--btn-text); }
+.btn.ghost { border: 1.5px solid var(--line); color: var(--ink); }
+.btn:focus-visible, a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+/* em breve */
+.card.soon { border-style: dashed; background: transparent; }
+.badge { align-self: flex-start; background: var(--gold); color: #1E1318; border-radius: 999px; padding: 2px 10px; font-size: .8rem; font-weight: 700; }
+
+/* o que os jogos têm em comum */
+.feats { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); padding: 0; margin: 0; list-style: none; }
+.feats li { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.feats b { display: block; margin-bottom: 2px; }
+.feats span { color: var(--muted); font-size: .95rem; }
+
+/* sobre */
+.about { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 22px; display: grid; gap: 18px; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .about { grid-template-columns: 180px 1fr; } }
+.avatar { width: 140px; height: 140px; border-radius: 50%; background: var(--cream); display: grid; place-items: center; font-family: "Fraunces", Georgia, serif; font-weight: 800; font-size: 2.6rem; color: var(--berry); }
+.about h3 { margin: 0 0 2px; font-size: 1.4rem; }
+.about .role { color: var(--muted); margin: 0 0 12px; }
+.about p { margin: 0 0 12px; }
+/* trechos que o professor ainda precisa completar */
+.todo { background: var(--todo); border-radius: 4px; padding: 0 4px; font-style: italic; }
+
+footer { margin: 40px 0 0; padding: 22px 0 36px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+footer p { margin: 0 0 6px; }
+</style>
+<script>
+  // mesma preferência de cores dos jogos (engrenagem ⚙️ → Colors), porque é o mesmo site
+  try { const t = JSON.parse(localStorage.getItem("reader:theme")); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <a class="brand" href="#">Prof. Ritaciro · English</a>
+    <nav aria-label="Seções"><a href="#jogos">Jogos</a><a href="#em-breve">Em breve</a><a href="#sobre">Sobre</a></nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>Jogos e leituras interativas em inglês</h1>
+      <p>Feitos para os alunos do Ensino Médio Integrado do IFAL Campus Viçosa: cada um treina um conteúdo de gramática com uma história em que o aluno decide. Abrem no celular e funcionam sem internet.</p>
+      <ul class="pills" aria-label="Para quem">
+        <li>📱 No celular</li><li>📶 Sem internet</li><li>🇧🇷 Apoio em português</li><li>🔒 Sem coleta de dados</li>
+      </ul>
+    </div>
+
+    <section id="jogos" aria-labelledby="jogos-t">
+      <h2 id="jogos-t">Os jogos</h2>
+      <p class="lead">Toque em <b>Jogar</b> para abrir no navegador. A <b>página do professor</b> tem os QR codes para projetar ou imprimir.</p>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section id="em-breve" aria-labelledby="breve-t">
+      <h2 id="breve-t">Em breve</h2>
+      <p class="lead">Em produção ou esperando revisão.</p>
+      <div class="grid" id="soon"></div>
+    </section>
+
+    <section aria-labelledby="comum-t">
+      <h2 id="comum-t">O que todos têm em comum</h2>
+      <p class="lead">Os jogos usam o mesmo motor e o mesmo painel de configurações (⚙️).</p>
+      <ul class="feats">
+        <li><b>📖 Glossário de toque</b><span>Três níveis: Normal, Beginner (quase todas as palavras, com tradução) e desligado. Os verbos mostram as formas.</span></li>
+        <li><b>🔊 Áudio</b><span>Lê as palavras e os textos com a voz em inglês do próprio aparelho. Nada é baixado.</span></li>
+        <li><b>📝 My words</b><span>Cada palavra consultada fica guardada para revisar em cartões.</span></li>
+        <li><b>📲 Instala como aplicativo</b><span>Depois da primeira visita, abre mesmo sem sinal.</span></li>
+        <li><b>🌙 Claro e escuro</b><span>E três tamanhos de texto, para ler melhor na tela pequena.</span></li>
+        <li><b>✍️ Produção no fim</b><span>Cada jogo termina com o aluno escrevendo as próprias frases, com dicas de gramática.</span></li>
+      </ul>
+    </section>
+
+    <section id="sobre" aria-labelledby="sobre-t">
+      <h2 id="sobre-t">Sobre</h2>
+      <div class="about">
+        <div class="avatar" aria-hidden="true">RC</div>
+        <div>
+          <h3>Ritaciro Cavalcante</h3>
+          <p class="role">Professor de Língua Inglesa · IFAL Campus Viçosa</p>
+          <p>Professor de inglês no Ensino Médio Integrado do Instituto Federal de Alagoas (IFAL), Campus Viçosa, com turmas dos cursos técnicos em Informática e Administração. <span class="todo">[complete: formação (graduação, mestrado, doutorado) e há quanto tempo leciona]</span></p>
+          <p>Desenvolve materiais didáticos digitais para o ensino de inglês: leituras graduadas interativas e jogos em que o aluno pratica a gramática tomando decisões numa história, pensados para o celular e para escolas com internet limitada. <span class="todo">[complete: seu papel no LabLiM (Laboratório de Línguas Móvel) e projetos de pesquisa ou extensão]</span></p>
+          <p><span class="todo">[complete: áreas de interesse, por exemplo ensino de línguas mediado por tecnologia, gamificação, leitura]</span></p>
+          <p class="sub"><span class="todo">[complete: links — currículo Lattes, e-mail institucional]</span></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Conteúdo didático sob licença <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br">CC BY-SA 4.0</a>; código sob licença MIT; fontes Fraunces e Atkinson Hyperlegible sob SIL OFL. O código de cada jogo está no GitHub de <a href="https://github.com/ritassiru">ritassiru</a>.</p>
+    <p>Os jogos não coletam nem enviam dados: o progresso fica só no aparelho do aluno.</p>
+  </footer>
+</div>
+
+<script>
+/* ---------------------------------------------------------------------------
+   OS JOGOS. Para acrescentar um jogo, copie um item da lista JOGOS.
+   Para um jogo novo em produção, use a lista EM_BREVE; quando ele for
+   publicado, mova o item para JOGOS e acrescente "link" e "professor".
+   --------------------------------------------------------------------------- */
+const JOGOS = [
+  {
+    nome: "Story Shelf", pt: "Estante de leituras interativas", icone: "img/story-shelf.png",
+    link: "story-shelf/", professor: "story-shelf/professor.html",
+    turma: "1º e 2º ano", nivel: "A2 · B1",
+    gramatica: ["Simple past", "Simple future", "Present perfect", "Past continuous", "Question words", "Sequence words"],
+    texto: "Graded readers do tipo choose your own adventure: o aluno lê e decide o que a personagem faz. Um caderno de detetive com perguntas acompanha a leitura, e no fim o aluno reconta a história com as próprias frases.",
+    lista: ["The Phone on the Bus (1º ano, A2)", "Who Posted It? (1º ano, A2)", "The Fortune App (1º ano, A2)", "The New Student (2º ano, B1)", "The Shelter Dog (2º ano, B1)"]
+  },
+  {
+    nome: "The CEO Game", pt: "Você é o CEO de uma startup", icone: "img/the-ceo-game.png",
+    link: "the-ceo-game/", professor: "the-ceo-game/professor.html",
+    turma: "2º ano", nivel: "A2 · B1",
+    gramatica: ["First conditional", "Second conditional"],
+    texto: "O aluno comanda uma startup e ouve três conselheiros (If you..., you will...). São 5 decisões sorteadas por partida, com dinheiro e reputação em jogo e 9 finais possíveis. No fim, escreve o que faria diferente: If I were the CEO again, I would...",
+    lista: []
+  },
+  {
+    nome: "My Busy Week", pt: "Uma semana no celular de um adolescente", icone: "img/my-busy-week.png",
+    link: "my-busy-week/", professor: "my-busy-week/professor.html",
+    turma: "1º ano", nivel: "A1 · A2",
+    gramatica: ["Will", "Going to", "Present continuous (futuro)"],
+    texto: "Um dia por aula, de segunda a sexta: o aluno responde mensagens, confere agenda e previsão do tempo e monta as frases para organizar um evento. As decisões da semana mudam o que acontece na sexta. No fim, um código de resultado mostra ao professor como foi a semana.",
+    lista: ["Surprise Party", "School Culture Fair", "Class Trip"]
+  }
+];
+const EM_BREVE = [
+  {
+    nome: "The Science Fair", pt: "Novo livro da Story Shelf", turma: "1º ano", nivel: "A2",
+    gramatica: ["Simple past", "Question words", "Sequence words"],
+    texto: "Rascunho pronto, esperando a revisão do professor."
+  },
+  {
+    nome: "Grandma's Recipe", pt: "Novo livro da Story Shelf", turma: "1º ano", nivel: "A2",
+    gramatica: ["Simple past", "Question words", "Sequence words"],
+    texto: "Rascunho pronto, esperando a revisão do professor."
+  }
+];
+
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+const tags = j => `<ul class="tags"><li>${esc(j.turma)}</li><li>${esc(j.nivel)}</li>${j.gramatica.map(g => `<li class="gram">${esc(g)}</li>`).join("")}</ul>`;
+document.getElementById("grid").innerHTML = JOGOS.map(j => `
+  <article class="card">
+    <div class="card-h"><img src="${esc(j.icone)}" alt="" width="64" height="64"><div><h3>${esc(j.nome)}</h3><p class="pt">${esc(j.pt)}</p></div></div>
+    ${tags(j)}
+    <p>${esc(j.texto)}</p>
+    ${j.lista.length ? `<div class="sub">${j.lista.length > 3 ? "Livros publicados:" : "Eventos:"}<ul>${j.lista.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>` : ""}
+    <div class="actions"><a class="btn primary" href="${esc(j.link)}">Jogar ▶</a><a class="btn ghost" href="${esc(j.professor)}">Página do professor</a></div>
+  </article>`).join("");
+document.getElementById("soon").innerHTML = EM_BREVE.length ? EM_BREVE.map(j => `
+  <article class="card soon">
+    <span class="badge">Em breve</span>
+    <div><h3>${esc(j.nome)}</h3><p class="pt">${esc(j.pt)}</p></div>
+    ${tags(j)}
+    <p>${esc(j.texto)}</p>
+  </article>`).join("") : `<p class="sub">Nada em produção no momento.</p>`;
+</script>
+</body>
+</html>
