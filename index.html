@@ -88,7 +88,7 @@ section > h2 { font-size: 1.6rem; margin: 0 0 4px; }
 /* sobre */
 .about { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 22px; display: grid; gap: 18px; grid-template-columns: 1fr; }
 @media (min-width: 720px) { .about { grid-template-columns: 180px 1fr; } }
-.avatar { width: 140px; height: 140px; border-radius: 50%; background: var(--cream); display: grid; place-items: center; font-family: "Fraunces", Georgia, serif; font-weight: 800; font-size: 2.6rem; color: var(--berry); }
+.avatar { width: 140px; height: 140px; border-radius: 50%; background: var(--cream); object-fit: cover; border: 3px solid var(--line); }
 .about h3 { margin: 0 0 2px; font-size: 1.4rem; }
 .about .role { color: var(--muted); margin: 0 0 12px; }
 .about p { margin: 0 0 12px; }
@@ -146,7 +146,7 @@ footer p { margin: 0 0 6px; }
     <section id="sobre" aria-labelledby="sobre-t">
       <h2 id="sobre-t">Sobre</h2>
       <div class="about">
-        <div class="avatar" aria-hidden="true">RC</div>
+        <img class="avatar" src="img/ritaciro.webp" alt="Foto de Ritaciro Cavalcante da Silva" width="140" height="140">
         <div>
           <h3>Ritaciro Cavalcante da Silva</h3>
           <p class="role">Professor de Ensino Básico, Técnico e Tecnológico (Língua Inglesa) · IFAL Campus Viçosa</p>

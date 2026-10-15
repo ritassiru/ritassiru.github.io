@@ -21,7 +21,8 @@ Tudo fica em `index.html`, sem etapa de build:
 - **Jogo em produção:** acrescente um item em `EM_BREVE`. Quando ele for
   publicado, mova o item para `JOGOS`, com `link`, `professor` e `icone`.
 - **Seção Sobre:** os dados vêm do perfil do professor no Integra IFAL e do
-  Currículo Lattes (out/2026). Atualize quando o Lattes mudar.
+  Currículo Lattes (out/2026). Atualize quando o Lattes mudar. A foto fica em
+  `img/ritaciro.webp` (400 × 400 px).
 
 As cores seguem as dos jogos (claro e escuro) e a página respeita a opção de
 cores escolhida dentro deles. Nada de bibliotecas externas nem CDNs: as fontes
