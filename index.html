@@ -17,17 +17,17 @@
 /* as mesmas cores dos jogos (claro e escuro) */
 :root {
   --bg: #F6F0E6; --panel: #FFFDF8; --ink: #2B1721; --muted: #6E5C63; --berry: #6D2E46; --rose: #A26769;
-  --cream: #ECE2D0; --line: #D9CBBE; --ok: #3E8E6B; --gold: #C08A2E; --btn-text: #FFFFFF; --todo: #FCEFC7;
+  --cream: #ECE2D0; --line: #D9CBBE; --ok: #3E8E6B; --gold: #C08A2E; --btn-text: #FFFFFF;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #1E1318; --panel: #2A1C23; --ink: #F1E7EA; --muted: #BFA9B1; --berry: #C77A98; --rose: #D19A9C;
-    --cream: #3A2830; --line: #4A3540; --ok: #62B891; --gold: #E0AE55; --btn-text: #1E1318; --todo: #4A3A1E;
+    --cream: #3A2830; --line: #4A3540; --ok: #62B891; --gold: #E0AE55; --btn-text: #1E1318;
   }
 }
 :root[data-theme="dark"] {
   --bg: #1E1318; --panel: #2A1C23; --ink: #F1E7EA; --muted: #BFA9B1; --berry: #C77A98; --rose: #D19A9C;
-  --cream: #3A2830; --line: #4A3540; --ok: #62B891; --gold: #E0AE55; --btn-text: #1E1318; --todo: #4A3A1E;
+  --cream: #3A2830; --line: #4A3540; --ok: #62B891; --gold: #E0AE55; --btn-text: #1E1318;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -92,8 +92,7 @@ section > h2 { font-size: 1.6rem; margin: 0 0 4px; }
 .about h3 { margin: 0 0 2px; font-size: 1.4rem; }
 .about .role { color: var(--muted); margin: 0 0 12px; }
 .about p { margin: 0 0 12px; }
-/* trechos que o professor ainda precisa completar */
-.todo { background: var(--todo); border-radius: 4px; padding: 0 4px; font-style: italic; }
+.links { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 0; margin: 4px 0 0; list-style: none; font-weight: 700; }
 
 footer { margin: 40px 0 0; padding: 22px 0 36px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
 footer p { margin: 0 0 6px; }
@@ -149,12 +148,16 @@ footer p { margin: 0 0 6px; }
       <div class="about">
         <div class="avatar" aria-hidden="true">RC</div>
         <div>
-          <h3>Ritaciro Cavalcante</h3>
-          <p class="role">Professor de Língua Inglesa · IFAL Campus Viçosa</p>
-          <p>Professor de inglês no Ensino Médio Integrado do Instituto Federal de Alagoas (IFAL), Campus Viçosa, com turmas dos cursos técnicos em Informática e Administração. <span class="todo">[complete: formação (graduação, mestrado, doutorado) e há quanto tempo leciona]</span></p>
-          <p>Desenvolve materiais didáticos digitais para o ensino de inglês: leituras graduadas interativas e jogos em que o aluno pratica a gramática tomando decisões numa história, pensados para o celular e para escolas com internet limitada. <span class="todo">[complete: seu papel no LabLiM (Laboratório de Línguas Móvel) e projetos de pesquisa ou extensão]</span></p>
-          <p><span class="todo">[complete: áreas de interesse, por exemplo ensino de línguas mediado por tecnologia, gamificação, leitura]</span></p>
-          <p class="sub"><span class="todo">[complete: links — currículo Lattes, e-mail institucional]</span></p>
+          <h3>Ritaciro Cavalcante da Silva</h3>
+          <p class="role">Professor de Ensino Básico, Técnico e Tecnológico (Língua Inglesa) · IFAL Campus Viçosa</p>
+          <p>Doutor em Linguística (2022) e mestre em Letras e Linguística (2015) pela Universidade Federal de Alagoas (UFAL), onde também se graduou em Letras – Inglês. É professor do Instituto Federal de Alagoas desde 2014 e hoje leciona inglês no Ensino Médio Integrado do Campus Viçosa. Em 2016, participou como bolsista do programa Setec-Capes/Nova – Brazil TESOL Training Program.</p>
+          <p>Pesquisa jogos eletrônicos e aprendizagem de língua inglesa, na área de Linguística Aplicada: letramento digital crítico, <i>ludoletramento</i>, pesquisa narrativa e autoetnografia. A tese <i>Em busca de um ludoletramento digital crítico</i> estudou as questões críticas do jogar videogame; a dissertação reuniu histórias de aprendizagem de inglês através de videogames. É pesquisador dos grupos “Letramentos, Educação e Transculturalidade” e GENTELLI.</p>
+          <p>No IFAL, desenvolve projetos que levam essa pesquisa para a sala de aula, como a série <i>Knowing New Languages</i> (jogos no gênero visual novel para aprender inglês) e o <b>Laboratório de Línguas Móvel (LabLiM)</b>, para escolas públicas de Viçosa e região. Os jogos desta página continuam esse trabalho: histórias em que o aluno pratica a gramática tomando decisões, pensadas para o celular e para escolas com internet limitada.</p>
+          <ul class="links">
+            <li><a href="http://lattes.cnpq.br/0480100134459261">Currículo Lattes</a></li>
+            <li><a href="https://orcid.org/0000-0001-6861-3899">ORCID</a></li>
+            <li><a href="https://integra.ifal.edu.br/ecossistema/pessoas/ritaciro-cavalcante-da-silva/ritaciro">Perfil no Integra IFAL</a></li>
+          </ul>
         </div>
       </div>
     </section>
