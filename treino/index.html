@@ -22,12 +22,12 @@
 :root{
  --bg:#f3f4f6;--card:#ffffff;--fg:#1d2126;--muted:#5f6670;--line:#dde0e5;
  --accent:#e2611b;--accent-ink:#ffffff;--leather:#8a4b2a;--soft:#fbe9df;
- --good:#1f7a4d;--good-bg:#e0f2e8;--hard:#b3261e;--hard-bg:#fbe4e2;
+ --good:#1f7a4d;--good-bg:#e0f2e8;--hard:#b3261e;--hard-bg:#fbe4e2;--water:#2b72c4;--water-bg:#e3eefb;
  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
  --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--card:#1f2226;--fg:#eceef1;--muted:#a3a9b2;--line:#30343a;--accent:#f07a36;--accent-ink:#15171a;--leather:#d39a74;--soft:#3a2418;--good:#5cc68f;--good-bg:#173628;--hard:#f2867c;--hard-bg:#3d1c1a;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#15171a;--card:#1f2226;--fg:#eceef1;--muted:#a3a9b2;--line:#30343a;--accent:#f07a36;--accent-ink:#15171a;--leather:#d39a74;--soft:#3a2418;--good:#5cc68f;--good-bg:#173628;--hard:#f2867c;--hard-bg:#3d1c1a;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171a;--card:#1f2226;--fg:#eceef1;--muted:#a3a9b2;--line:#30343a;--accent:#f07a36;--accent-ink:#15171a;--leather:#d39a74;--soft:#3a2418;--good:#5cc68f;--good-bg:#173628;--hard:#f2867c;--hard-bg:#3d1c1a;--water:#6aaef2;--water-bg:#172a40;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#15171a;--card:#1f2226;--fg:#eceef1;--muted:#a3a9b2;--line:#30343a;--accent:#f07a36;--accent-ink:#15171a;--leather:#d39a74;--soft:#3a2418;--good:#5cc68f;--good-bg:#173628;--hard:#f2867c;--hard-bg:#3d1c1a;--water:#6aaef2;--water-bg:#172a40;color-scheme:dark}
 body{background:var(--bg);color:var(--fg);font:16px/1.5 var(--body)}
 [hidden]{display:none!important}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--card)}
@@ -142,6 +142,14 @@ ol.ex .demo{margin:0;max-width:220px}
 .tbl th,.tbl td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
 .tbl th{color:var(--muted);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em}
 .tbl td.n{text-align:right}
+.water{border-color:var(--water-bg)}
+.wtop{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.wtop p b{font:700 1.7rem var(--display);color:var(--water);font-variant-numeric:tabular-nums}
+.wbar{height:12px;border-radius:6px;background:var(--water-bg);overflow:hidden}.wbar i{display:block;height:100%;width:0;background:var(--water);border-radius:6px;transition:width .4s}
+.wbtns{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.wbtns button{display:grid;gap:0;padding:10px 4px;border-radius:10px;border:1px solid var(--water-bg);background:var(--water-bg);color:var(--water);font:700 1rem var(--display);cursor:pointer;font-variant-numeric:tabular-nums}
+.wbtns small{font:500 .72rem var(--body);color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.wbar i{transition:none}}
 .msg{font-size:.88rem;padding:8px 10px;border-radius:8px;background:var(--good-bg);color:var(--good)}
 .msg.err{background:var(--hard-bg);color:var(--hard)}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
@@ -165,6 +173,15 @@ ol.ex .demo{margin:0;max-width:220px}
    <p class="sub">Escolha o treino de hoje. O app guia cada série, os descansos e a troca de aparelho.</p>
    <p class="status" id="netStatus"><span class="dot"></span><span>Verificando conexão…</span></p>
   </header>
+  <div class="card water" id="waterCard" aria-label="Água de hoje">
+   <div class="wtop"><h3>Água hoje</h3><p><b id="wTot">0 L</b> <span id="wGoal" class="note"></span></p></div>
+   <div class="wbar" aria-hidden="true"><i id="wBar"></i></div>
+   <p class="note" id="wPct"></p>
+   <div class="wbtns"><button type="button" data-ml="200">+200 ml<small>copo</small></button><button type="button" data-ml="300">+300 ml<small>copo grande</small></button><button type="button" data-ml="500">+500 ml<small>garrafa</small></button><button type="button" id="wOther">Outro<small>valor</small></button></div>
+   <div class="row" id="wOtherRow" hidden><input id="wMl" inputmode="numeric" placeholder="ml, ex.: 750" style="flex:1 1 120px;width:auto"><button type="button" class="mini" id="wAdd">Adicionar</button></div>
+   <p class="note" id="wLog"></p>
+   <div class="row" style="justify-content:space-between;align-items:center"><span class="note" id="wWhy" style="flex:1 1 200px"></span><button type="button" class="link" id="wUndo" hidden>Desfazer último</button></div>
+  </div>
   <div class="wk" id="wkList" role="group" aria-label="Treinos"></div>
   <div class="card">
    <div class="grid2">
@@ -204,7 +221,7 @@ ol.ex .demo{margin:0;max-width:220px}
    <div class="feel"><button type="button" data-f="facil">Fácil</button><button type="button" data-f="ok">No ponto</button><button type="button" data-f="dificil">Difícil</button></div>
   </div>
   <div class="row"><button id="bMain" class="pri" type="button"></button><button id="bAlt" class="sec" type="button"></button></div>
-  <div class="row small"><button id="bBack" class="link" type="button">Voltar um passo</button><button id="bMapT" class="link" type="button">Onde fica</button><button id="bBusy" class="link" type="button" hidden>Ocupado</button><button id="bSound" class="link" type="button">Som: ligado</button><button id="bVoice" class="link" type="button">Voz: ligada</button><button id="bEnd" class="link" type="button">Encerrar</button></div>
+  <div class="row small"><button id="bBack" class="link" type="button">Voltar um passo</button><button id="bMapT" class="link" type="button">Onde fica</button><button id="bBusy" class="link" type="button" hidden>Ocupado</button><button id="bSound" class="link" type="button">Som: ligado</button><button id="bVoice" class="link" type="button">Voz: ligada</button><button id="bWater" class="link" type="button">Água: 0 L</button><button id="bEnd" class="link" type="button">Encerrar</button></div>
  </div>
 </section>
 
@@ -225,6 +242,7 @@ ol.ex .demo{margin:0;max-width:220px}
  <h2>Evolução</h2>
  <div class="stats" id="eStats"></div>
  <div class="wchart" id="eWeight"></div>
+ <div class="wchart" id="eWater"></div>
  <h3>Cargas por aparelho</h3>
  <div class="spark-grid" id="eLoads"></div>
  <h3>Últimos treinos</h3>
@@ -254,6 +272,12 @@ ol.ex .demo{margin:0;max-width:220px}
   <button class="pri" type="button" id="bWeigh" style="flex:none">Salvar pesagem</button>
   <p id="pMsg" class="msg" hidden></p>
   <div class="tbl" id="wTable"></div>
+ </div>
+ <div class="card">
+  <h3>Meta de água</h3>
+  <p class="note">Deixe em branco para a meta automática: 35 ml por kg do seu peso, mais 500 ml nos dias de treino. Se você tem alguma orientação médica sobre líquidos, siga a do seu médico.</p>
+  <div class="row"><input id="pWater" inputmode="numeric" placeholder="ml por dia, ex.: 2800" style="flex:1 1 140px;width:auto"><button type="button" class="sec" id="bWGoal" style="flex:none">Salvar meta</button></div>
+  <p class="note" id="pWaterAuto"></p>
  </div>
  <div class="card">
   <h3>Carga inicial sugerida</h3>
@@ -370,20 +394,35 @@ function loadLocal(){
  const seedEl=document.getElementById('seed');let seed=null;try{seed=JSON.parse(seedEl.textContent)}catch(e){}
  if(seed&&!S.sessions.length&&seed.sessions){S.sessions=seed.sessions.map(norm).sort((a,b)=>b.at-a.at);ls('sessions',S.sessions)}
  if(seed&&seed.profile&&!(S.profile.weigh||[]).length){S.profile=Object.assign(S.profile,seed.profile);ls('profile',S.profile)}
+ S.water=ls('water')||{};S.waterP=ls('waterP')||[];
+ if(seed&&seed.water&&!Object.keys(S.water).length){S.water=seed.water;ls('water',S.water)}
 }
 loadLocal();
 const localSave=()=>ls('sessions',S.sessions);
 const pending=()=>S.sessions.filter(s=>s._p);
+/* ---------- água ---------- */
+const dayKey=t=>{const d=new Date(t);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const waterDay=k=>S.water[k]||[];
+const waterTotal=k=>waterDay(k).reduce((a,x)=>a+x.ml,0);
+function waterAuto(){const w=lastWeigh();let g=w&&num(w.kg)?Math.round(num(w.kg)*35/100)*100:2000;g=Math.min(4000,Math.max(1500,g));
+ const today=dayKey(Date.now());if(S.sessions.some(s=>dayKey(s.at)===today))g+=500;return g}
+const waterGoal=()=>num(S.profile.waterGoal)||waterAuto();
+function waterSave(k){if(!S.waterP.includes(k))S.waterP.push(k);ls('water',S.water);ls('waterP',S.waterP);flush();renderWater()}
+function addWater(ml){const k=dayKey(Date.now());S.water[k]=waterDay(k).concat([{at:Date.now(),ml}]);waterSave(k);try{navigator.vibrate&&navigator.vibrate(30)}catch(e){}}
+function undoWater(){const k=dayKey(Date.now()),l=waterDay(k);if(!l.length)return;S.water[k]=l.slice(0,-1);waterSave(k)}
+const fmtL=ml=>(Math.round(ml/10)/100).toString().replace('.',',')+' L';
 
 /* ================= conta e sincronização ================= */
 const sCol=()=>S.db.collection('data/users/'+S.uid+'/fit/sessions');
 const pDoc=()=>S.db.doc('data/users/'+S.uid+'/profile');
+const wCol=()=>S.db.collection('data/users/'+S.uid+'/fit/water');
 const clean=s=>{const o=Object.assign({},s);delete o._p;return o};
 async function flush(){
  if(!S.db||!navigator.onLine)return netUI();
  for(const s of pending()){try{await sCol().doc(String(s.at)).set(clean(s));delete s._p}catch(e){break}}
  if(S.profile._p){try{const p=Object.assign({},S.profile);delete p._p;await pDoc().set(p);delete S.profile._p}catch(e){}}
- localSave();ls('profile',S.profile);netUI();
+ for(const k of S.waterP.slice()){try{await wCol().doc(k).set({day:k,items:waterDay(k)});S.waterP=S.waterP.filter(x=>x!==k)}catch(e){break}}
+ ls('waterP',S.waterP);localSave();ls('profile',S.profile);netUI();
 }
 async function connect(){
  try{
@@ -398,6 +437,10 @@ async function connect(){
   const have=new Set(remote.map(s=>s.at));
   for(const s of S.sessions)if(!have.has(s.at))s._p=1;
   S.sessions=remote.concat(S.sessions.filter(s=>!have.has(s.at))).sort((a,b)=>b.at-a.at);
+  try{const ws=await wCol().orderBy('day','desc').limit(120).get();ws.docs.forEach(d=>{const v=d.data();if(!v||!v.day)return;
+   if(S.waterP.includes(v.day)){const ats=new Set(waterDay(v.day).map(x=>x.at));S.water[v.day]=waterDay(v.day).concat((v.items||[]).filter(x=>!ats.has(x.at))).sort((a,b)=>a.at-b.at)}
+   else S.water[v.day]=v.items||[]});ls('water',S.water)}catch(e){}
+  Object.keys(S.water).forEach(k=>{if(waterDay(k).length&&!S.waterP.includes(k))S.waterP.push(k)});
   const ps=await pDoc().get();
   if(ps.exists){const rp=ps.data();if(!S.profile._p)S.profile=Object.assign({sex:'',age:'',height:'',weigh:[]},rp);else{const ats=new Set((S.profile.weigh||[]).map(w=>w.at));(rp.weigh||[]).forEach(w=>{if(!ats.has(w.at))S.profile.weigh.push(w)})}}
   else if((S.profile.weigh||[]).length||S.profile.sex)S.profile._p=1;
@@ -407,7 +450,7 @@ async function connect(){
 }
 window.addEventListener('online',flush);window.addEventListener('offline',netUI);
 function netUI(){
- const el=$('#netStatus');if(!el)return;const n=pending().length+(S.profile._p?1:0);
+ const el=$('#netStatus');if(!el)return;const n=pending().length+(S.profile._p?1:0)+((S.waterP||[]).length);
  let cls='',txt;
  if(S.db&&navigator.onLine){cls='on';txt=n?'Conectado. Enviando '+n+' registro(s) para a sua conta…':'Conectado. Histórico salvo na sua conta.'}
  else if(S.db){cls='off';txt='Sem internet. Tudo fica salvo no celular e vai para a sua conta quando a conexão voltar.'}
@@ -798,7 +841,7 @@ $('#bWeigh').onclick=()=>{const v=num($('#wKg').value);if(v==null||v<30||v>300){
 
 /* ================= exportar, importar, cópia offline ================= */
 const dmsg=(t,err)=>{const m=$('#dMsg');m.textContent=t;m.className='msg'+(err?' err':'');m.hidden=false};
-function snapshot(){return{v:1,exportedAt:Date.now(),sessions:S.sessions.map(clean),profile:(()=>{const p=Object.assign({},S.profile);delete p._p;return p})()}}
+function snapshot(){return{v:1,exportedAt:Date.now(),water:S.water,sessions:S.sessions.map(clean),profile:(()=>{const p=Object.assign({},S.profile);delete p._p;return p})()}}
 async function offer(filename,data,mime){
  if(S.downloads){try{await S.downloads.save({filename,data});return 'ok'}catch(e){return e&&e.code==='declined'?'declined':'fail'}}
  if(window.claude)return 'fail';
@@ -819,7 +862,8 @@ $('#iImp').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)r
   (d.sessions||[]).map(norm).forEach(s=>{if(s&&s.at&&!have.has(s.at)){s._p=1;S.sessions.push(s);n++}});S.sessions.sort((a,b)=>b.at-a.at);
   const ats=new Set((S.profile.weigh||[]).map(w=>w.at));let m=0;((d.profile||{}).weigh||[]).forEach(w=>{if(!ats.has(w.at)){S.profile.weigh.push(w);m++}});
   if(d.profile){['sex','age','height'].forEach(k=>{if(!S.profile[k]&&d.profile[k])S.profile[k]=d.profile[k]})}
-  if(m)S.profile._p=1;localSave();ls('profile',S.profile);flush();refreshAll();dmsg('Importados '+n+' treino(s) e '+m+' pesagem(ns).')}
+  let wd=0;Object.entries(d.water||{}).forEach(([k,l])=>{const ats=new Set(waterDay(k).map(x=>x.at));const add=(l||[]).filter(x=>x&&x.at&&!ats.has(x.at));if(add.length){S.water[k]=waterDay(k).concat(add).sort((a,b)=>a.at-b.at);if(!S.waterP.includes(k))S.waterP.push(k);wd++}});ls('water',S.water);ls('waterP',S.waterP);
+  if(m)S.profile._p=1;localSave();ls('profile',S.profile);flush();refreshAll();dmsg('Importados '+n+' treino(s), '+m+' pesagem(ns) e '+wd+' dia(s) de água.')}
  catch(err){dmsg('Esse arquivo não parece um export da Ficha FortFit.',true)}e.target.value=''});
 
 /* ================= instalação ================= */
@@ -832,8 +876,45 @@ if(IS_PWA){$('#bOff').hidden=true;
 }
 
 /* ================= início ================= */
-function refreshAll(){renderSetup();renderFichas();renderEvo();renderProfile();feat()}
+/* ================= água: telas ================= */
+function renderWater(){
+ const k=dayKey(Date.now()),tot=waterTotal(k),g=waterGoal(),pct=Math.min(100,Math.round(tot/g*100)),l=waterDay(k);
+ const C=$('#waterCard');if(C){
+  $('#wTot').textContent=fmtL(tot);$('#wGoal').textContent='de '+fmtL(g);$('#wBar').style.width=pct+'%';
+  $('#wPct').textContent=tot>=g?'Meta do dia cumprida.':'Faltam '+fmtL(g-tot)+'.';
+  $('#wUndo').hidden=!l.length;
+  $('#wLog').textContent=l.length?l.slice(-6).map(x=>new Date(x.at).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+' · '+x.ml+' ml').join('   '):'Nenhum registro hoje.';
+  $('#wWhy').textContent=num(S.profile.waterGoal)?'Meta definida por você no Perfil.':(lastWeigh()?'Meta automática: 35 ml por kg do seu peso':'Meta padrão de 2 L. Registre seu peso no Perfil para calcular a sua')+(S.sessions.some(s=>dayKey(s.at)===k)&&!num(S.profile.waterGoal)?', mais 500 ml porque hoje teve treino.':'.');
+ }
+ const bw=$('#bWater');if(bw)bw.textContent='Água: '+fmtL(tot);
+ const E=$('#eWater');if(E)E.innerHTML=waterChart();
+ const pg=$('#pWaterAuto');if(pg)pg.textContent='Automática hoje: '+fmtL(waterAuto())+'.';
+}
+function waterChart(){
+ const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-i);days.push({k:dayKey(d.getTime()),d})}
+ const vals=days.map(x=>waterTotal(x.k)),g=waterGoal(),any=vals.some(v=>v>0);
+ const hit=vals.filter(v=>v>=g).length,avg=Math.round(vals.reduce((a,b)=>a+b,0)/7);
+ if(!any)return '<h3>Água nos últimos 7 dias</h3><p class="note">Use os botões de água na tela Treinar para começar o registro.</p>';
+ const W=320,H=140,pl=30,pr=6,pt=12,pb=22,mx=Math.max(g,...vals)*1.1,bw=(W-pl-pr)/7;
+ const Y=v=>pt+(1-v/mx)*(H-pt-pb);
+ let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Água por dia na última semana">';
+ const tk=[];for(let v=0;v<=mx;v+=1000)tk.push(v);tk.forEach(t=>{s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(t)+'" y2="'+Y(t)+'" stroke="var(--line)"/><text x="'+(pl-5)+'" y="'+(Y(t)+4)+'" text-anchor="end" font-size="10" fill="var(--muted)">'+(t/1000)+' L</text>'});
+ vals.forEach((v,i)=>{const x=pl+i*bw+bw*.18,w=bw*.64,y=Y(v);
+  s+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+Math.max(0,Y(0)-y).toFixed(1)+'" rx="3" fill="var(--water)" opacity="'+(v>=g?1:.55)+'"/>';
+  s+='<text x="'+(x+w/2).toFixed(1)+'" y="'+(H-6)+'" text-anchor="middle" font-size="10" fill="var(--muted)">'+(i===6?'hoje':days[i].d.toLocaleDateString('pt-BR',{weekday:'short'}).replace('.',''))+'</text>'});
+ s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(g)+'" y2="'+Y(g)+'" stroke="var(--water)" stroke-dasharray="4 4"/><text x="'+(W-pr)+'" y="'+(Y(g)-4)+'" text-anchor="end" font-size="10" fill="var(--water)">meta '+fmtL(g)+'</text></svg>';
+ return '<h3>Água nos últimos 7 dias</h3><p class="note">Média de <b style="color:var(--fg)">'+fmtL(avg)+'</b> por dia. Meta cumprida em '+hit+' de 7 dias.</p>'+s;
+}
+$$('#waterCard [data-ml]').forEach(b=>b.addEventListener('click',()=>addWater(+b.dataset.ml)));
+$('#wOther').addEventListener('click',()=>{const r=$('#wOtherRow');r.hidden=!r.hidden;if(!r.hidden)$('#wMl').focus()});
+$('#wAdd').addEventListener('click',()=>{const v=num($('#wMl').value);if(v&&v>0&&v<=3000){addWater(Math.round(v));$('#wMl').value='';$('#wOtherRow').hidden=true}});
+$('#wUndo').addEventListener('click',undoWater);
+$('#bWater').addEventListener('click',()=>addWater(200));
+$('#bWGoal').addEventListener('click',()=>{const v=num($('#pWater').value);S.profile.waterGoal=v&&v>=500&&v<=6000?Math.round(v):'';saveProfile();pmsg(S.profile.waterGoal?'Meta de água salva.':'Meta de água voltou a ser automática.')});
+
+function refreshAll(){renderWater();$('#pWater').value=S.profile.waterGoal||'';renderSetup();renderFichas();renderEvo();renderProfile();feat()}
 refreshAll();
+setInterval(renderWater,60000);
 view((location.hash||'').slice(1));
 connect();
 })();
